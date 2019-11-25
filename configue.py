@@ -1,0 +1,8 @@
+# -*- encoding: utf-8 -*-
+
+TRAIN_PERIOD = ['2010', '2011', '2012', '2013', '2014', '2015']
+VALIDATION_PERIOD = ['2016', '2017']
+BACKTEST_PERIOD = ['2018', '2019']
+T = 28
+UP_THRESHOLD = 6
+DOWN_THRESHOLD = -6
