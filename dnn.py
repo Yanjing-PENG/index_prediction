@@ -37,7 +37,7 @@ model.add(Dense(10, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 
 sgd = SGD(learning_rate=0.001, decay=9, momentum=0, nesterov=False)
-adam = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, amsgrad=False)
+adam = Adam(learning_rate=0.00001, beta_1=0.9, beta_2=0.999, amsgrad=False)
 
 model.compile(loss='categorical_crossentropy',
               optimizer=adam,
@@ -45,25 +45,30 @@ model.compile(loss='categorical_crossentropy',
 
 print(model.summary())
 
-history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=2000, verbose=2, batch_size=100)
+history = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=3000, verbose=2, batch_size=100)
 
-plt.figure(figsize=[12, 4])
-plt.subplot(121)
 plt.plot(history.epoch, history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
+plt.savefig('accuracy figure')
+plt.close()
 
-plt.subplot(122)
 plt.plot(history.epoch, history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('Model loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper right')
-plt.show()
+plt.savefig('loss figure')
+plt.close()
+
+import pickle
+f = open('outputs.pkl', 'wb')
+pickle.dump(history, f)
+f.close()
 
 model.save('dnn_model.h5')
 
